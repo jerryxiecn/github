@@ -103,7 +103,17 @@ public class StockServiceImpl implements StockServiceI{
 	}	
 	public String chart()
 	{
-		List<Fund>  list = fundMapper.getAllFunds();
+		
+		long total = fundMapper.getCountsFunds();
+		long start = 0;
+		if(total >60)
+		{
+			start = total-60;
+		}
+		//List<Fund>  list = fundMapper.getAllFunds();
+		List<Fund> list = fundMapper.getPageFunds((int)start,(int)total);
+
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("list", list);
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
